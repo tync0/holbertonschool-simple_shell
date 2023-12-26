@@ -55,13 +55,11 @@ int main(void)
 		if (getline(&buf, &x, stdin) == -1)
 		{
 			free_elements(&av);
-			free(buf);
 			break;
 		}
 		if (strcmp(buf, "\n") == 0)
 		{
 			free_elements(&av);
-			free(buf);
 			continue;
 		}
 		cmd = strtok(buf, " \t\n");
@@ -72,7 +70,6 @@ int main(void)
 		}
 		if (!av || !av[0])
 		{
-			free(cmd);
 			free_elements(&av);
 			break;
 		}

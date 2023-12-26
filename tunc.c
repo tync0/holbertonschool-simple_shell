@@ -42,7 +42,7 @@ void free_elements(char **av)
 int main(void)
 {
 	size_t x = SIZE;
-	char *buf = NULL, *cmd, **av;
+	char *buf = NULL, *cmd, **av = NULL;
 	int ex, i = 0;
 
 	while (1)
@@ -71,8 +71,6 @@ int main(void)
 		}
 		if (!av || !av[0])
 		{
-			free(cmd);
-			free(buf);
 			free_elements(av);
 			break;
 		}

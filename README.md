@@ -1,1 +1,0 @@
-# holbertonschool-simple_shell

@@ -20,10 +20,12 @@ if (isatty(STDIN_FILENO))
 printf("\n");
 break;
 }
-if (command == NULL || command[0] == '\n')
-{
+if (command == NULL)
+break;
+while (command[0] == ' ' || command[0] == '\t')
+command++;
+if (command[0] == '\n' || command[0] == '\0')
 continue;
-}
 status = execute(command);
 if (status == -1)
 {

@@ -15,6 +15,9 @@ return (-1);
 getline(&command, &size, stdin);
 if (c_trim(command, new_command) == 0)
 {
+	free(argv);
+	free(command);
+	free(new_command);
 	return (0);
 }
 tokens(command, argv);

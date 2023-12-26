@@ -23,6 +23,7 @@ int main(void)
 		cmd = strtok(buf, " ");
 		while (cmd)
 		{
+			printf("cmd: %s\n", cmd);
 			av[i++] = strdup(cmd);
 			cmd = strtok(NULL, " ");
 		}

@@ -31,14 +31,13 @@ void run_process(int id, char **str)
  * @str: val
  * Return: Always 0
  */
-void free_elements(char **av, int index, char *str)
+void free_elements(char ***av)
 {
 	int id;
 
-	for(id = 0 ; id < index ; id++)
-		free(*(av + id));
-	free(av);
-	free(str);
+	for(id = 0 ; !(*av)[id] ; id++)
+		free((*av)[id]);
+	free(*av);
 }
 /**
  * main - main function
@@ -73,7 +72,8 @@ int main(void)
 			break;
 		ex = fork();
 		run_process(ex, av);
-		free_elements(av, i, buf);
+		free_elements(&av);
+		free(buf);
 		i = 0;
 	}
 	return (0);

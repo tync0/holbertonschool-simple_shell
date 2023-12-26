@@ -27,13 +27,13 @@ void run_process(int id, char **str)
  * @str: val
  * Return: Always 0
  */
-void free_elements(char ***av)
+void free_elements(char **av)
 {
 	int id;
 
-	for(id = 0 ; !(*av)[id] ; id++)
-		free((*av)[id]);
-	free(*av);
+	for(id = 0 ; !av[id] ; id++)
+		free(av[id]);
+	free(av);
 }
 /**
  * main - main function
@@ -54,12 +54,13 @@ int main(void)
 			printf("#cisfun$ ");
 		if (getline(&buf, &x, stdin) == -1)
 		{
-			free_elements(&av);
+                        free(buf);
+			free_elements(av);
 			break;
 		}
 		if (strcmp(buf, "\n") == 0)
 		{
-			free_elements(&av);
+			free_elements(av);
 			continue;
 		}
 		cmd = strtok(buf, " \t\n");
@@ -70,15 +71,18 @@ int main(void)
 		}
 		if (!av || !av[0])
 		{
-			free_elements(&av);
+			free(cmd);
+			free(buf);
+			free_elements(av);
 			break;
 		}
 		ex = fork();
+		
 		run_process(ex, av);
-		free_elements(&av);
+		free(cmd);
+		free(buf);
+		free_elements(av);
 		i = 0;
 	}
-	free(buf);
-	free(cmd);
 	return (0);
 }

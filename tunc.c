@@ -1,8 +1,4 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <string.h>
-#include <sys/wait.h>
+#include "main.h"
 /**
  * run_process - run process
  * @str: val
@@ -45,36 +41,47 @@ void free_elements(char ***av)
  */
 int main(void)
 {
-	size_t x = 100;
-	char *buf, *cmd, **av;
+	size_t x = SIZE;
+	char *buf = NULL, *cmd, **av;
 	int ex, i = 0;
 
 	while (1)
 	{
-		buf = malloc(x);
-		av = malloc(x * sizeof(char *));
-		if (!buf || !av)
+		av = malloc(SIZE * sizeof(char *));
+		if (!av)
                 	exit(98);
 		if (isatty(STDIN_FILENO))
 			printf("#cisfun$ ");
-		getline(&buf, &x, stdin);
-		if (!buf)
-			exit(98);
+		if (getline(&buf, &x, stdin) == -1)
+		{
+			free_elements(&av);
+			free(buf);
+			break;
+		}
 		if (strcmp(buf, "\n") == 0)
+		{
+			free_elements(&av);
+			free(buf);
 			continue;
+		}
 		cmd = strtok(buf, " \t\n");
 		while (cmd)
 		{
 			av[i++] = strdup(cmd);
 			cmd = strtok(NULL, " \t\n");
 		}
-		if (!av[0])
+		if (!av || !av[0])
+		{
+			free(cmd);
+			free_elements(&av);
 			break;
+		}
 		ex = fork();
 		run_process(ex, av);
 		free_elements(&av);
-		free(buf);
 		i = 0;
 	}
+	free(buf);
+	free(cmd);
 	return (0);
 }

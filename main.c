@@ -5,9 +5,8 @@
 */
 int main(void)
 {
-char *command = NULL, **arr;
-pid_t pid;
-int status, gl;
+char *command = NULL;
+int status;
 size_t size = SIZE;
 
 while (1)

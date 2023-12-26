@@ -32,7 +32,7 @@ return (tokens);
 */
 int execute(char *command)
 {
-char **tokens, *tmp;
+char **tokens;
 pid_t pid;
 int status;
 

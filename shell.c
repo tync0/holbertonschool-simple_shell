@@ -10,9 +10,6 @@ int main(void)
 	int a, b;
 	(void)a;
 	(void)b;
-	if (isatty(STDIN_FILENO))
-		a = interactive_mode();
-	else
-		b = single_line();
+		interactive_mode();
 	return (0);
 }

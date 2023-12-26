@@ -16,26 +16,29 @@ command = malloc(SIZE);
 argv = malloc(SIZE * sizeof(char *));
 while (status)
 {
-if (command == NULL || argv == NULL)
-return (-1);
-status = isatty(STDIN_FILENO);
-if (status)
-printf("#cisfun$ ");
-read = getline(&command, &size, stdin);
-if (read == -1)
-{
-free(command);
-continue;
-}
-tokens(command, argv);
-pid = fork();
-status = execute(argv, pid);
-if (status == 0)
-{
-free(command);
-free(argv);
-exit(0);
-}
+	if (command == NULL || argv == NULL)
+		return (-1);
+	if (isatty(STDIN_FILENO))
+		printf("#cisfun$ ");
+	read = getline(&command, &size, stdin);
+	if (*command == '\n')
+		continue;
+	if (read == -1)
+	{
+		free(command);
+		continue;
+	}
+	tokens(command, argv);
+	if (!argv[0])
+		break;
+	pid = fork();
+	status = execute(argv, pid);
+	if (status == 0)
+	{
+		free(command);
+		free(argv);
+		exit(0);
+	}
 }
 return (1);
 }

@@ -10,7 +10,6 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include <sys/wait.h>
-int single_line();
 int interactive_mode();
 void tokens(char *command, char **argv);
 int execute(char **argv, pid_t pid);

@@ -14,4 +14,5 @@ int single_line();
 int interactive_mode();
 void tokens(char *command, char **argv);
 int execute(char **argv, pid_t pid);
+int c_trim(char *str, char *str1);
 #endif /* MAIN_H */

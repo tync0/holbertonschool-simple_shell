@@ -55,3 +55,21 @@ i++;
 }
 argv[i] = NULL;
 }
+
+int c_trim(char *str, char *str1)
+{
+    int idx = 0, j, k = 0;
+ 
+    while (str[idx] == ' ' || str[idx] == '\t' || str[idx] == '\n')
+    {
+        idx++;
+    }
+ 
+    for (j = idx; str[j] != '\0'; j++)
+    {
+        str1[k] = str[j];
+        k++;
+    }
+    str1[k] = '\0';
+    return strlen(str1);
+}

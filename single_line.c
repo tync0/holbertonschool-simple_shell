@@ -6,14 +6,24 @@
  */
 int single_line(void)
 {
-char *command = malloc(SIZE), **argv = malloc(SIZE * sizeof(char *));
+char *command = malloc(SIZE), **argv = malloc(SIZE * sizeof(char *)), *new_command = malloc(SIZE);
+int i = 0;
 size_t size = SIZE;
 
-if (command == NULL || argv == NULL)
+if (command == NULL || argv == NULL || new_command == NULL)
 return (-1);
 getline(&command, &size, stdin);
+if (c_trim(command, new_command) == 0)
+{
+	return (0);
+}
 tokens(command, argv);
-if (execve(argv[0], argv, NULL) == -1)
-perror("Error: ");
+while (argv[i])
+{
+    if (execve(argv[0], argv, NULL) == -1)
+    perror("Error: ");
+    i++;
+}
+
 return (1);
 }

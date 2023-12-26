@@ -1,16 +1,17 @@
 #ifndef MAIN_H
 #define MAIN_H
-#define SIZE 100
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <sys/types.h>
 #include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 #include <sys/wait.h>
+#define SIZE 100
 extern char **environ;
-char **split_line(char *command);
-int execute(char *command);
-void free_token(char **tokens);
+int main(void);
+int execute_command(char *command);
+void execute(pid_t pid, char *command);
+char **split(char *input);
+void free_arr(char **arr);
 #endif

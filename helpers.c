@@ -1,17 +1,16 @@
 #include "main.h"
-
 /**
- * split_line - splits a line into tokens
- * @command: line to split
- * Return: array of tokens
+ * split - splits a string into an array of strings
+ * @command: string to split
+ * Return: returns an array of strings
 */
-char **split_line(char *command)
+char **split(char *command)
 {
 char *token, **tokens;
 int i = 0;
 
 tokens = malloc(sizeof(char *) * SIZE);
-if (tokens == NULL)
+if (!tokens)
 {
 perror("Malloc Error: ");
 exit(98);
@@ -27,50 +26,66 @@ return (tokens);
 }
 /**
  * execute - executes a command
- * @command: command from getline
- * Return: 0 on success, -1 on failure
+ * @pid: pid of the process
+ * @command: command to execute
+ * Return: void
 */
-int execute(char *command)
+void execute(pid_t pid, char *command)
 {
-char **tokens;
-pid_t pid;
 int status;
-
-tokens = split_line(command);
-if (tokens == NULL)
-return (-1);
-pid = fork();
 if (pid == -1)
 {
-free_token(tokens);
-return (-1);
+free(command);
+perror("Error");
 }
 else if (pid == 0)
 {
-status = execve(tokens[0], tokens, environ);
+execute_command(command);
+exit(0);
 }
 else
-{
 wait(&status);
-if (WIFEXITED(status))
-status = WEXITSTATUS(status);
-}
-free_token(tokens);
-return (status);
-}
 
+}
 /**
- * free_token - frees an array of tokens
- * @tokens: array of tokens
+ * execute_command - executes a command
+ * @command: command to execute
+ * Return: returns 0 on success
+*/
+int execute_command(char *command)
+{
+char **arr;
+
+arr = split(command);
+if (arr == NULL)
+{
+perror("Error");
+exit(1);
+}
+if (execve(command, arr, environ) == -1)
+{
+perror("Error execve");
+free_arr(arr);
+free(command);
+exit(1);
+}
+free_arr(arr);
+free(command);
+return (0);
+}
+/**
+ * free_arr - frees an array of strings
+ * @arr: array to free
  * Return: void
 */
-void free_token(char **tokens)
+void free_arr(char **arr)
 {
 int i = 0;
 
-if (!tokens)
-return;
-for (; tokens[i]; i++)
-free(tokens[i]);
-free(tokens);
+while (arr[i])
+{
+free(arr[i]);
+i++;
+}
+free(arr);
 }

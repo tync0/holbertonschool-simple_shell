@@ -73,7 +73,7 @@ perror("Error");
 exit(1);
 }
 
-if (execve(command, arr, environ) == -1)
+if (execvp(command, arr) == -1)
 {
 perror("Error execve");
 free_arr(arr);

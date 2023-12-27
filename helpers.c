@@ -50,7 +50,7 @@ exit(0);
 }
 else
 {
-waitpid(pid, &status, 0); 
+waitpid(pid, &status, 0);
 if (WIFEXITED(status))
 status = WEXITSTATUS(status);
 free(tmp);
@@ -102,3 +102,4 @@ i++;
 }
 free(arr);
 }
+

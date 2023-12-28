@@ -97,6 +97,10 @@ void free_arr(char **arr)
 	free(arr);
 }
 
+/**
+ * print_env - prints the environment
+ * Return: void
+*/
 void print_env(void)
 {
 	int i = 0;

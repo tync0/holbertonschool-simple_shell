@@ -11,7 +11,7 @@
 int main(void)
 {
 	char *command, *tmp = NULL;
-	int read, status;
+	int read, status = 0;
 	size_t size;
 
 	while (1)
@@ -52,7 +52,7 @@ int main(void)
 		if (strcmp(command, "exit") == 0)
 		{
 			free(command);
-			exit(0);
+			exit(status);
 		}
 		pre_execute(command, tmp, &status);
 	}

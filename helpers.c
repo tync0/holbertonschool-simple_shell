@@ -71,6 +71,7 @@ int execute(char *command)
 		perror("Error");
 		exit(1);
 	}
+	
 	if (execve(arr[0], arr, environ) == -1)
 	{
 		perror("Error execve");
@@ -78,6 +79,7 @@ int execute(char *command)
 		free(command);
 		exit(1);
 	}
+	
 	free_arr(arr);
 	free(command);
 	return (0);

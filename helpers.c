@@ -67,7 +67,7 @@ int execute(char *command) {
 		perror("Error");
 		exit(1);
 	}
-	if (execvp(arr[0], arr) == -1)
+	if (execve(arr[0], arr, NULL) == -1)
 	{
 		perror("Error execve");
 		free_arr(arr);

@@ -31,9 +31,8 @@ char **split(char *command) {
  * @tmp: temporary variable for memory management
  * Return: void
  */
-void pre_execute(char *command, char *tmp) {
+void pre_execute(char *command, char *tmp, int *status) {
 	pid_t pid;
-	int status;
 	pid = fork();
 	if (pid == -1)
 	{
@@ -48,9 +47,9 @@ void pre_execute(char *command, char *tmp) {
 	}
 	else
 	{
-		waitpid(pid, &status, 0);
-		if (WIFEXITED(status))
-			status = WEXITSTATUS(status);
+		waitpid(pid, status, 0);
+		if (WIFEXITED(*status))
+			*status = WEXITSTATUS(*status);
 		free(tmp);
 	}
 }
@@ -67,7 +66,7 @@ int execute(char *command) {
 		perror("Error");
 		exit(1);
 	}
-	if (execve(arr[0], arr, NULL) == -1)
+	if (execve(arr[0], arr, environ) == -1)
 	{
 		perror("Error execve");
 		free_arr(arr);

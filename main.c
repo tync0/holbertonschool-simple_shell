@@ -11,7 +11,7 @@
 int main(void)
 {
 	char *command, *tmp = NULL;
-	int read;
+	int read, status;
 	size_t size;
 
 	while (1)
@@ -24,14 +24,14 @@ int main(void)
 		if (read == -1)
 		{
 			free(command);
-			exit(0);
+			break;
 		}
 		command[read - 1] = '\0';
 		tmp = command;
 		if (command == NULL)
 		{
 			free(tmp);
-			exit(0);
+			break;
 		}
 		while (command[0] == ' ' || command[0] == '\t')
 			command++;
@@ -44,10 +44,11 @@ int main(void)
 		if (strcmp(command, "exit") == 0)
 		{
 			free(tmp);
-			exit(0);
+			break;
 		}
-		pre_execute(command, tmp);
+		pre_execute(command, tmp, &status);
 	}
-	return (0);
+    printf("status: %d\n", status);
+	return (status);
 }
 

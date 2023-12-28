@@ -26,6 +26,17 @@ int main(void)
 			free(command);
 			break;
 		}
+        if (strcmp(command, "env\n") == 0)
+		{
+            print_env();
+			free(command);
+			continue;
+		}
+		if (strcmp(command, "exit\n") == 0)
+		{
+			free(command);
+			exit(0);
+		}
 		command[read - 1] = '\0';
 		tmp = command;
 		if (command == NULL)
@@ -41,19 +52,7 @@ int main(void)
 			free(tmp);
 			continue;
 		}
-        if (strcmp(command, "env") == 0)
-		{
-            print_env();
-			free(tmp);
-			continue;
-		}
-		if (strcmp(command, "exit") == 0)
-		{
-			free(tmp);
-            if (isatty(STDIN_FILENO))
-                exit(0);
-			break;
-		}
+        
 		pre_execute(command, tmp, &status);
 	}
 	return (status);

@@ -41,13 +41,22 @@ int main(void)
 			free(tmp);
 			continue;
 		}
+        if (strcmp(command, "env") == 0)
+		{
+            print_env();
+			free(tmp);
+			continue;
+		}
 		if (strcmp(command, "exit") == 0)
 		{
 			free(tmp);
+            if (isatty(STDIN_FILENO))
+                exit(0);
 			break;
 		}
 		pre_execute(command, tmp, &status);
 	}
+    printf("status: %d\n", status); 
 	return (status);
 }
 

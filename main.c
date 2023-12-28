@@ -44,7 +44,7 @@ int main(void)
 		if (strcmp(command, "exit") == 0)
 		{
 			free(tmp);
-			break;
+			exit(0);
 		}
 		pre_execute(command, tmp, &status);
 	}

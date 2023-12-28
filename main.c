@@ -48,7 +48,6 @@ int main(void)
 		}
 		pre_execute(command, tmp, &status);
 	}
-    printf("status: %d\n", status);
 	return (status);
 }
 

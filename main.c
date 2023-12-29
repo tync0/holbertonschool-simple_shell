@@ -46,6 +46,7 @@ int main(void)
  * exit_and_env - handle exit and env function
  * @command: command
  * @status: status
+ * Return: True if is env otherwise False
  */
 bool exit_and_env(char *command, int *status)
 {

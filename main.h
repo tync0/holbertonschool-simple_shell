@@ -12,9 +12,9 @@ extern char **environ;
 int main(void);
 bool exit_and_env(char *command, int *status);
 void pre_execute(char *command, char *tmp, int *status);
-void execute(char **arr, char *command, char *path, int *status, char *tmp);
+void execute(char **arr, char *path, int *status, char *tmp);
 char **split(char *input);
 void free_arr(char **arr);
 void print_env(void);
-char *get_path(char **arr, char *f_path, char *command);
+char *get_path(char **arr, char *command);
 #endif

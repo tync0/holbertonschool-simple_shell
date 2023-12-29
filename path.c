@@ -5,12 +5,13 @@
  * @f_path: full path
  * Return: returns the full path of a command
 */
-char *get_path(char **arr, char *f_path, char *command)
+char *get_path(char **arr, char *command)
 {
 	struct  stat st;
 	char *path = getenv("PATH");
 	char *copyenv = strdup(path);
 	char *token = strtok(copyenv, ":");
+	char *f_path = malloc(sizeof(char) * SIZE);
 
 	while (token != NULL)
 	{

@@ -66,6 +66,7 @@ int execute(char *command)
 {
 	char **arr = split(command);
 	char *path = malloc(200);
+
 	if (arr == NULL)
 	{
 		perror("Error");
@@ -78,7 +79,6 @@ int execute(char *command)
 		free(command);
 		exit(1);
 	}
-	
 	free_arr(arr);
 	free(command);
 	return (0);

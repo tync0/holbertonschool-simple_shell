@@ -10,6 +10,7 @@
 #define SIZE 100
 extern char **environ;
 int main(void);
+void exit_and_env(char *command, int *status);
 void pre_execute(char *command, char *tmp, int *status);
 int execute(char *command);
 char **split(char *input);

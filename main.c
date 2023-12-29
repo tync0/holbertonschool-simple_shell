@@ -13,7 +13,7 @@ int main(void)
 	char *command, *tmp = NULL;
 	int read, status = 0;
 	size_t size;
-	
+
 	while (1)
 	{
 		command = NULL;
@@ -26,7 +26,6 @@ int main(void)
 			free(command);
 			break;
 		}
-        
 		command[read - 1] = '\0';
 		tmp = command;
 		if (command == NULL)
@@ -42,20 +41,27 @@ int main(void)
 			free(tmp);
 			continue;
 		}
-        if (strcmp(command, "env") == 0)
-		{
-            status = 0;
-            print_env();
-			free(command);
-			continue;
-		}
-		if (strcmp(command, "exit") == 0)
-		{
-			free(command);
-			exit(status);
-		}
+		exit_and_env(command, &status);
 		pre_execute(command, tmp, &status);
 	}
 	return (status);
 }
-
+/**
+ * exit_and_env - handle exit and env function
+ * @command: command
+ * @status: status
+ */
+void exit_and_env(char *command, int *status)
+{
+	if (strcmp(command, "env") == 0)
+	{
+		*status = 0;
+		print_env();
+		free(command);
+	}
+	if (strcmp(command, "exit") == 0)
+	{
+		free(command);
+		exit(*status);
+	}
+}

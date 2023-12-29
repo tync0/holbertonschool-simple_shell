@@ -35,18 +35,40 @@ char **split(char *command)
  */
 void pre_execute(char *command, char *tmp, int *status)
 {
+	char **arr, *path, *f_path = NULL;
+
+	f_path = malloc(sizeof(char) * SIZE);
+	arr = split(command);
+	if (command[0] == '/' || command[0] == '.')
+		path = strdup(command);
+	else
+		path = get_path(arr, f_path, command);
+	execute(arr, command, path, status, tmp);
+}
+
+/**
+ * execute - executes a command
+ * @command: command to execute
+ * Return: returns 0 on success
+ */
+void execute(char **arr, char *command, char *path, int *status, char *tmp)
+{
 	pid_t pid = fork();
 
 	if (pid == -1)
 	{
-		free(command);
+		free(tmp);
 		perror("Error");
 	}
 	else if (pid == 0)
 	{
-		execute(command);
-		free(tmp);
-		exit(0);
+		if (execve(path, arr, environ) == -1)
+		{
+			perror("Error execve");
+			free_arr(arr);
+			free(tmp);
+			exit(1);
+		}
 	}
 	else
 	{
@@ -55,33 +77,8 @@ void pre_execute(char *command, char *tmp, int *status)
 			*status = WEXITSTATUS(*status);
 		free(tmp);
 	}
-}
-
-/**
- * execute - executes a command
- * @command: command to execute
- * Return: returns 0 on success
- */
-int execute(char *command)
-{
-	char **arr = split(command);
-	char *path = malloc(200);
-
-	if (arr == NULL)
-	{
-		perror("Error");
-		exit(1);
-	}
-	if (execve(get_path(arr, path, command), arr, environ) == -1)
-	{
-		perror("Error execve");
-		free_arr(arr);
-		free(command);
-		exit(1);
-	}
+	free(path);	
 	free_arr(arr);
-	free(command);
-	return (0);
 }
 
 /**

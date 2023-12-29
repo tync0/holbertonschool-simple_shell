@@ -6,7 +6,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-//#include <sys/wait.h>
+#include <sys/wait.h>
 #define SIZE 100
 extern char **environ;
 int main(void);

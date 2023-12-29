@@ -19,4 +19,3 @@ void free_arr(char **arr);
 void print_env(void);
 char *get_path(char **arr, char *f_path, char *command);
 #endif
-

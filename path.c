@@ -5,7 +5,7 @@
  * @f_path: full path
  * Return: returns the full path of a command
 */
-char *get_path(char *c_path, char *f_path, int *status)
+char *get_path(char *c_path, char *f_path)
 {
 	char *path = getenv("PATH");
 	char *token = strtok(path, ":");

@@ -44,7 +44,7 @@ void pre_execute(char *command, char *tmp, int *status)
 	}
 	else if (pid == 0)
 	{
-		execute(command, status);
+		execute(command);
 		free(tmp);
 		exit(0);
 	}
@@ -62,7 +62,7 @@ void pre_execute(char *command, char *tmp, int *status)
  * @command: command to execute
  * Return: returns 0 on success
  */
-int execute(char *command, int *status)
+int execute(char *command)
 {
 	char **arr = split(command);
 	char *path = malloc(200);
@@ -72,7 +72,7 @@ int execute(char *command, int *status)
 		perror("Error");
 		exit(1);
 	}
-	if (execve(get_path(arr[0], path, status), arr, environ) == -1)
+	if (execve(get_path(arr[0], path), arr, environ) == -1)
 	{
 		perror("Error execve");
 		free_arr(arr);

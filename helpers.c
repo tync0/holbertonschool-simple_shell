@@ -33,7 +33,7 @@ char **split(char *command)
  * @status: status
  * Return: void
  */
-void pre_execute(char *command, char *tmp, int *status, char **arr)
+void pre_execute(char *command, char *tmp, int *status)
 {
 	pid_t pid = fork();
 
@@ -44,7 +44,7 @@ void pre_execute(char *command, char *tmp, int *status, char **arr)
 	}
 	else if (pid == 0)
 	{
-		execute(command, arr);
+		execute(command);
 		free(tmp);
 		exit(0);
 	}
@@ -62,8 +62,9 @@ void pre_execute(char *command, char *tmp, int *status, char **arr)
  * @command: command to execute
  * Return: returns 0 on success
  */
-int execute(char *command, char **arr)
+int execute(char *command)
 {
+	char **arr = split(command);
 	char *path = malloc(200);
 
 	if (arr == NULL)

@@ -5,10 +5,16 @@
  */
 int main(void)
 {
-	char *command, *tmp = NULL;
+	char *command, *tmp = NULL, **arr = malloc(sizeof(char *) * SIZE);
+	char *path;
 	int read, status = 0;
 	size_t size;
 
+	if (!arr)
+	{
+		perror("Malloc Error: ");
+		exit(98);
+	}
 	while (1)
 	{
 		command = NULL;
@@ -38,7 +44,22 @@ int main(void)
 		}
 		if (exit_and_env(command, &status))
 			continue;
-		pre_execute(command, tmp, &status);
+		arr = split(command);
+		printf("command: %s\n", command);
+		printf("arr: %s\n", arr[0]);
+		if (!arr)
+		{
+			perror("Error");
+			exit(1);
+		}
+		path = get_path(arr, command);
+		printf("path: %s\n", path);
+		if (!path)
+		{
+			path = strdup("");
+			command = strdup("/bin/ls");
+		}
+		pre_execute(command, tmp, &status, arr);
 	}
 	return (status);
 }
@@ -46,6 +67,7 @@ int main(void)
  * exit_and_env - handle exit and env function
  * @command: command
  * @status: status
+ * Return: True if is env otherwise False
  */
 bool exit_and_env(char *command, int *status)
 {

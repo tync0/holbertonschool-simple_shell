@@ -1,0 +1,82 @@
+#!/bin/bash
+echo ".\" Manpage for Simple Shell
+.TH "SIMPLE SHELL" 1 "2023-12-30" "Version 0.0.0.1.Open-Beta"
+
+.SH NAME
+simple_shell \- simple UNIX command interpreter.
+
+.SH SYNOPSIS
+\fB#include "main.h"\fR
+.br
+\fBint main(void);\fR
+.br
+\fBbool exit_and_env(char *command, int *status);\fR
+.br
+\fBvoid pre_execute(char *command, char *tmp, int *status);\fR
+.br
+\fBint execute(char *command);\fR
+.br
+\fBchar **split(char *input);\fR
+.br
+\fBvoid free_arr(char **arr);\fR
+.br
+\fBvoid print_env(void);\fR
+.br
+\fBchar *get_path(char **arr, char *f_path, char *command);\fR
+
+.SH DESCRIPTION
+The \fBsimple_shell\fR is a simple UNIX command interpreter.
+
+.SH RETURN VALUE
+Returns in success:
+.br
+<stdout> Result of inputted command.
+.br
+<stderr> 0
+.br
+Returns in error:
+.br
+<stdout> Error text
+.br
+<stderr> status code ( 127 - file not found; 1 - failure; 2 - ls cannot access)
+.SH FORMATS
+Interpreter supports 2 modes:
+
+.TP
+\fBInteractive\fR
+./simple_shell
+.br
+Waits for input from user
+
+.TP
+\fBNon-interactive\fR
+echo "ls" | ./simple_shell
+.br
+Lists files in directory and exits.
+
+.SH EXAMPLE
+.P
+\fBecho "ls" | ./simple_shell\fR
+.P
+Output:
+.P
+\fBfile1 file2 main.c\fR
+.P
+Return: 0
+
+.SH REPORTING BUGS
+You can contact with developers from Slack.
+
+.SH AUTHORS
+Tuncay Isgenderli
+.br
+Ravan Asadov
+
+.SH COPYRIGHTS
+Free to use!
+
+.SH SEE ALSO
+\fBman man\fR" > man_1_simple_shell.1
+mv man_1_simple_shell.1 /usr/local/man/man1/
+gzip -f /usr/local/man/man1/man_1_simple_shell.1
+man man_1_simple_shell

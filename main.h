@@ -6,17 +6,16 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <sys/wait.h>
 #include <stdbool.h>
-
+#include <sys/wait.h>
 #define SIZE 100
 extern char **environ;
 int main(void);
 bool exit_and_env(char *command, int *status);
-void pre_execute(char *command, char *tmp, int *status);
-int execute(char *command);
+void pre_execute(char *command, char *tmp, int *status, char **arr);
+int execute(char *command, char **arr);
 char **split(char *input);
 void free_arr(char **arr);
 void print_env(void);
-char *get_path(char *path, char *new_path);
+char *get_path(char **arr, char *command);
 #endif

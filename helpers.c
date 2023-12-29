@@ -66,7 +66,12 @@ int execute(char *command, char **arr)
 {
 	char *path = malloc(200);
 
-	if (execve(get_path(arr, command), arr, environ) == -1)
+	if (arr == NULL)
+	{
+		perror("Error");
+		exit(1);
+	}
+	if (execve(get_path(arr, path, command), arr, environ) == -1)
 	{
 		perror("Error execve");
 		free_arr(arr);

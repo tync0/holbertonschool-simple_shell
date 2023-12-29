@@ -8,12 +8,11 @@
 char *get_path(char **arr, char *command)
 {
 	struct  stat st;
-	char *path = NULL, *copyenv = NULL, *token = NULL, *f_path = NULL;
+	char *path = getenv("PATH"), *copyenv = NULL, *token = NULL, *f_path = NULL;
 
 	if (path == NULL || strlen(path) == 0)
 	{
 		fprintf(stderr, "./hsh: 1: %s: not found\n", arr[0]);
-		printf("salam");
 		if (path != NULL)
 			free(path);
 		free(command);

@@ -35,7 +35,7 @@ char **split(char *command)
  */
 void pre_execute(char *command, char *tmp, int *status)
 {
-	char **arr, *path, *f_path = NULL;
+	char **arr, *path;
 
 	arr = split(command);
 	if (command[0] == '/' || command[0] == '.')

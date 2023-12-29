@@ -5,20 +5,22 @@
  * @f_path: full path
  * Return: returns the full path of a command
 */
-char *get_path(char *c_path, char *f_path)
+char *get_path(char **arr, char *f_path, char *command)
 {
 	char *path = getenv("PATH");
 	char *token = strtok(path, ":");
 
 	while (token != NULL)
 	{
-		snprintf(f_path, SIZE, "%s/%s", token, c_path);
+		snprintf(f_path, SIZE, "%s/%s", token, arr[0]);
 		if (access(f_path, F_OK) == 0)
 			return (f_path);
 		token = strtok(NULL, ":");
 	}
-	if (c_path[0] == '/' || c_path[0] == '.')
-		return (c_path);
-	fprintf(stderr, "./hsh: 1: %s: not found\n", c_path);
+	if (arr[0][0] == '/' || arr[0][0] == '.')
+		return (arr[0]);
+	fprintf(stderr, "./hsh: 1: %s: not found\n", arr[0]);
+	free(command);
+	free_arr(arr);
 	exit(127);
 }

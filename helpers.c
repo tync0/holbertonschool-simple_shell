@@ -72,7 +72,7 @@ int execute(char *command)
 		perror("Error");
 		exit(1);
 	}
-	if (execve(get_path(arr[0], path), arr, environ) == -1)
+	if (execve(get_path(arr, path, command), arr, environ) == -1)
 	{
 		perror("Error execve");
 		free_arr(arr);

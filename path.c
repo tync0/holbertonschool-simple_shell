@@ -17,7 +17,7 @@ char *get_path(char *c_path, char *f_path, int *status)
 			return (f_path);
 		token = strtok(NULL, ":");
 	}
-	if (c_path[0] == '/')
+	if (c_path[0] == '/' || c_path[0] == '.')
 		return (c_path);
     exit(127);
 }

@@ -65,14 +65,13 @@ void pre_execute(char *command, char *tmp, int *status)
 int execute(char *command)
 {
 	char **arr = split(command);
-
+	char *path = malloc(200);
 	if (arr == NULL)
 	{
 		perror("Error");
 		exit(1);
 	}
-	
-	if (execve(arr[0], arr, environ) == -1)
+	if (execve(get_path(arr[0], path), arr, environ) == -1)
 	{
 		perror("Error execve");
 		free_arr(arr);

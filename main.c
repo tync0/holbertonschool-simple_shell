@@ -13,7 +13,7 @@ int main(void)
 	char *command, *tmp = NULL;
 	int read, status = 0;
 	size_t size;
-
+	
 	while (1)
 	{
 		command = NULL;

@@ -19,5 +19,5 @@ char *get_path(char *c_path, char *f_path)
 	}
 	if (c_path[0] == '/')
 		return (c_path);
-    exit(127);
+	exit(127);
 }

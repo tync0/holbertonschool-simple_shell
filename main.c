@@ -54,12 +54,12 @@ bool exit_and_env(char *command, int *status)
 		*status = 0;
 		print_env();
 		free(command);
-		return true;
+		return (true);
 	}
 	if (strcmp(command, "exit") == 0)
 	{
 		free(command);
 		exit(*status);
 	}
-	return false;
+	return (false);
 }

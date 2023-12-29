@@ -5,7 +5,7 @@
  * @f_path: full path
  * Return: returns the full path of a command
 */
-char *get_path(char *c_path, char *f_path)
+char *get_path(char *c_path, char *f_path, int *status)
 {
 	char *path = getenv("PATH");
 	char *token = strtok(path, ":");
@@ -19,5 +19,5 @@ char *get_path(char *c_path, char *f_path)
 	}
 	if (c_path[0] == '/')
 		return (c_path);
-	exit(127);
+    exit(127);
 }

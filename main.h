@@ -7,15 +7,17 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/wait.h>
+#include <stdbool.h>
+
 #define SIZE 100
 extern char **environ;
 int main(void);
-void exit_and_env(char *command, int *status);
+bool exit_and_env(char *command, int *status);
 void pre_execute(char *command, char *tmp, int *status);
-int execute(char *command);
+int execute(char *command, int *status);
 char **split(char *input);
 void free_arr(char **arr);
 void print_env(void);
-char *get_path(char *path, char *new_path);
+char *get_path(char *path, char *new_path, int *status);
 #endif
 

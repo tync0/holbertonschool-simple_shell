@@ -1,9 +1,4 @@
 #include "main.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-
 /**
  * main - main function of the shell
  * Return: returns 0 on success
@@ -41,7 +36,8 @@ int main(void)
 			free(tmp);
 			continue;
 		}
-		exit_and_env(command, &status);
+		if (exit_and_env(command, &status))
+			continue;
 		pre_execute(command, tmp, &status);
 	}
 	return (status);
@@ -51,17 +47,19 @@ int main(void)
  * @command: command
  * @status: status
  */
-void exit_and_env(char *command, int *status)
+bool exit_and_env(char *command, int *status)
 {
 	if (strcmp(command, "env") == 0)
 	{
 		*status = 0;
 		print_env();
 		free(command);
+		return true;
 	}
 	if (strcmp(command, "exit") == 0)
 	{
 		free(command);
 		exit(*status);
 	}
+	return false;
 }

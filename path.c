@@ -19,5 +19,6 @@ char *get_path(char *c_path, char *f_path)
 	}
 	if (c_path[0] == '/' || c_path[0] == '.')
 		return (c_path);
+	fprintf(stderr, "./hsh: 1: %s: not found\n", c_path);
 	exit(127);
 }

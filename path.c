@@ -12,8 +12,8 @@ char *get_path(char **arr, char *command)
 
 	if (path == NULL)
 	{
-		perror("Error");
-		exit(1);
+		fprintf(stderr, "./hsh: 1: %s: not found\n", arr[0]);
+		exit(127);
 	}
 	copyenv = strdup(path);
 	token = strtok(copyenv, ":");

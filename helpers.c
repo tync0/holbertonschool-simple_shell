@@ -56,9 +56,12 @@ void pre_execute(char *command, char *tmp, int *status)
 
 /**
  * execute - executes a command
- * @command: command to execute
- * Return: returns 0 on success
- */
+ * @arr: array of commands
+ * @path: path of the command
+ * @status: status
+ * @tmp: temporary variable for memory management
+ * Return: void
+*/
 void execute(char **arr, char *path, int *status, char *tmp)
 {
 	pid_t pid = fork();
@@ -86,7 +89,7 @@ void execute(char **arr, char *path, int *status, char *tmp)
 			*status = WEXITSTATUS(*status);
 		free(tmp);
 	}
-	free(path);	
+	free(path);
 	free_arr(arr);
 }
 

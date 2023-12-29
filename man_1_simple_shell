@@ -1,9 +1,9 @@
 #!/bin/bash
 echo ".\" Manpage for Simple Shell
-.TH "SIMPLE SHELL" 1 "2023-12-30" "Version 0.0.0.1.Open-Beta"
+.TH SIMPLE_SHELL 1 "2023-12-30" "Version 0.0.0.1.Open-Beta"
 
 .SH NAME
-simple_shell \- simple UNIX command interpreter.
+simple_shell - simple UNIX command interpreter.
 
 .SH SYNOPSIS
 \fB#include "main.h"\fR
@@ -14,9 +14,9 @@ simple_shell \- simple UNIX command interpreter.
 .br
 \fBvoid pre_execute(char *command, char *tmp, int *status);\fR
 .br
-\fBint execute(char *command);\fR
+\fBvoid execute(char **arr, char *path, int *status, char *tmp);\fR
 .br
-\fBchar **split(char *input);\fR
+\fBchar **split(char *command);\fR
 .br
 \fBvoid free_arr(char **arr);\fR
 .br
@@ -28,31 +28,34 @@ simple_shell \- simple UNIX command interpreter.
 The \fBsimple_shell\fR is a simple UNIX command interpreter.
 
 .SH RETURN VALUE
-Returns in success:
+Returns on success:
 .br
 <stdout> Result of inputted command.
 .br
 <stderr> 0
 .br
-Returns in error:
+Returns on error:
 .br
 <stdout> Error text
 .br
-<stderr> status code ( 127 - file not found; 1 - failure; 2 - ls cannot access)
+<stderr> status code (127 - file not found; 1 - failure; 2 - ls cannot access)
+
 .SH FORMATS
 Interpreter supports 2 modes:
 
 .TP
 \fBInteractive\fR
-./simple_shell
 .br
-Waits for input from user
+\fB./simple_shell\fR
+.br
+Waits for input from the user.
 
 .TP
 \fBNon-interactive\fR
-echo "ls" | ./simple_shell
 .br
-Lists files in directory and exits.
+\fBecho "ls" | ./simple_shell\fR
+.br
+Lists files in the directory and exits.
 
 .SH EXAMPLE
 .P
@@ -65,7 +68,7 @@ Output:
 Return: 0
 
 .SH REPORTING BUGS
-You can contact with developers from Slack.
+You can contact the developers via Slack.
 
 .SH AUTHORS
 Tuncay Isgenderli

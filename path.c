@@ -1,9 +1,9 @@
 #include "main.h"
 /**
  * get_path - gets the path of a command
- * @c_path: command path
- * @f_path: full path
- * Return: returns the full path of a command
+ * @arr: array of commands
+ * @command: command
+ * Return: returns the path of the command
 */
 char *get_path(char **arr, char *command)
 {

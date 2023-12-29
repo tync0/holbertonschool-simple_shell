@@ -1,9 +1,4 @@
 #include "main.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-
 /**
  * main - main function of the shell
  * Return: returns 0 on success
@@ -11,7 +6,7 @@
 int main(void)
 {
 	char *command, *tmp = NULL;
-	int read;
+	int read, status = 0;
 	size_t size;
 
 	while (1)
@@ -24,14 +19,14 @@ int main(void)
 		if (read == -1)
 		{
 			free(command);
-			exit(0);
+			break;
 		}
 		command[read - 1] = '\0';
 		tmp = command;
 		if (command == NULL)
 		{
 			free(tmp);
-			exit(0);
+			break;
 		}
 		while (command[0] == ' ' || command[0] == '\t')
 			command++;
@@ -41,13 +36,30 @@ int main(void)
 			free(tmp);
 			continue;
 		}
-		if (strcmp(command, "exit") == 0)
-		{
-			free(tmp);
-			exit(0);
-		}
-		pre_execute(command, tmp);
+		if (exit_and_env(command, &status))
+			continue;
+		pre_execute(command, tmp, &status);
 	}
-	return (0);
+	return (status);
 }
-
+/**
+ * exit_and_env - handle exit and env function
+ * @command: command
+ * @status: status
+ */
+bool exit_and_env(char *command, int *status)
+{
+	if (strcmp(command, "env") == 0)
+	{
+		*status = 0;
+		print_env();
+		free(command);
+		return (true);
+	}
+	if (strcmp(command, "exit") == 0)
+	{
+		free(command);
+		exit(*status);
+	}
+	return (false);
+}

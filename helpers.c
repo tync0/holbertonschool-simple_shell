@@ -5,7 +5,8 @@
  * @command: string to split
  * Return: returns an array of strings
  */
-char **split(char *command) {
+char **split(char *command)
+{
 	char *token, **tokens;
 	int i = 0;
 
@@ -22,24 +23,25 @@ char **split(char *command) {
 		token = strtok(NULL, " \t\n");
 	}
 	tokens[i] = NULL;
-	return tokens;
+	return (tokens);
 }
 
 /**
  * pre_execute - prepares and executes a command
  * @command: command to execute
  * @tmp: temporary variable for memory management
+ * @status: status
  * Return: void
  */
-void pre_execute(char *command, char *tmp) {
-	pid_t pid;
-	int status;
-	pid = fork();
+void pre_execute(char *command, char *tmp, int *status)
+{
+	pid_t pid = fork();
+
 	if (pid == -1)
 	{
 		free(command);
 		perror("Error");
-	} 
+	}
 	else if (pid == 0)
 	{
 		execute(command);
@@ -48,9 +50,9 @@ void pre_execute(char *command, char *tmp) {
 	}
 	else
 	{
-		waitpid(pid, &status, 0);
-		if (WIFEXITED(status))
-			status = WEXITSTATUS(status);
+		waitpid(pid, status, 0);
+		if (WIFEXITED(*status))
+			*status = WEXITSTATUS(*status);
 		free(tmp);
 	}
 }
@@ -60,14 +62,17 @@ void pre_execute(char *command, char *tmp) {
  * @command: command to execute
  * Return: returns 0 on success
  */
-int execute(char *command) {
+int execute(char *command)
+{
 	char **arr = split(command);
+	char *path = malloc(200);
+
 	if (arr == NULL)
 	{
 		perror("Error");
 		exit(1);
 	}
-	if (execve(arr[0], arr, NULL) == -1)
+	if (execve(get_path(arr[0], path), arr, environ) == -1)
 	{
 		perror("Error execve");
 		free_arr(arr);
@@ -84,10 +89,26 @@ int execute(char *command) {
  * @arr: array to free
  * Return: void
  */
-void free_arr(char **arr) {
+void free_arr(char **arr)
+{
 	int i = 0;
+
 	while (arr[i])
 		free(arr[i++]);
 	free(arr);
 }
 
+/**
+ * print_env - prints the environment
+ * Return: void
+*/
+void print_env(void)
+{
+	int i = 0;
+
+	while (environ[i])
+	{
+		printf("%s\n", environ[i]);
+		i++;
+	}
+}

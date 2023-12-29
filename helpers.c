@@ -35,11 +35,20 @@ char **split(char *command)
  */
 void pre_execute(char *command, char *tmp, int *status)
 {
+	struct stat st;
 	char **arr, *path;
 
 	arr = split(command);
 	if (command[0] == '/' || command[0] == '.')
+	{
+		if (stat(arr[0], &st) != 0)
+		{
+			free_arr(arr);
+			free(tmp);
+			return;
+		}
 		path = strdup(command);
+	}
 	else
 		path = get_path(arr, command);
 	execute(arr, path, status, tmp);

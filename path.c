@@ -14,7 +14,8 @@ char *get_path(char **arr, char *command)
 	{
 		fprintf(stderr, "./hsh: 1: %s: not found\n", arr[0]);
 		free(command);
-		free(path);
+		if (strlen(path) == 0)
+			free(path);
 		free_arr(arr);
 		exit(127);
 	}

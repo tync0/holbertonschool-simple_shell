@@ -8,11 +8,16 @@
 char *get_path(char **arr, char *command)
 {
 	struct  stat st;
-	char *path = getenv("PATH");
-	char *copyenv = strdup(path);
-	char *token = strtok(copyenv, ":");
-	char *f_path = malloc(sizeof(char) * SIZE);
+	char *path = getenv("PATH"), *copyenv = NULL, *token = NULL, *f_path = NULL;
 
+	if (path == NULL)
+	{
+		perror("Error");
+		exit(1);
+	}
+	copyenv = strdup(path);
+	token = strtok(copyenv, ":");
+	f_path = malloc(sizeof(char) * SIZE);
 	while (token != NULL)
 	{
 		snprintf(f_path, SIZE, "%s/%s", token, arr[0]);
